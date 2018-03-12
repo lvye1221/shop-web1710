@@ -1,13 +1,25 @@
+
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <router-view/>
+    
+    <nav-header></nav-header>
+
+    <router-view/>           
+    <!-- 路由，根据我们的路径，可以替换不同的内容 -->
   </div>
 </template>
 
 <script>
+
+// 导入新建好的组件
+// import  ES6 导入的代码，是关键字，类似于 var
+import NavHeader from "./components/NavHeader"
+
 export default {
-  name: 'App'
+  name: 'App',
+  components: {  
+    NavHeader
+  }
 }
 </script>
 

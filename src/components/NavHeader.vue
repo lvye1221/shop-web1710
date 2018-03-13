@@ -1,6 +1,6 @@
 <template>
   <div class="hello">
-        <div class="site-header" style="clear:both;">
+      <div class="site-header" style="clear:both;">
         <div class="container">
             <div class="header-logo">
                 <a href="#/" title="小米官网"><img src="/static/img/logo.png" /></a>
@@ -48,6 +48,8 @@
             <div class="container"></div>
         </div>
     </div>
+
+          
   </div>
 </template>
 

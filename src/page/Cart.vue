@@ -1,6 +1,11 @@
 <template>
   <div>
 
+      <!-- 使用导航组件 -->
+    <nav-bread>
+        购物车
+    </nav-bread>
+
     <div class="container">
         <div class="cart">
             <div class="page-title-normal">
@@ -92,8 +97,14 @@
 </template>
 
 <script>
+
+import NavBread from "@/components/NavBread"
+
 export default {
-  name: 'Cart'   // 组件名
+  name: 'Cart',   // 组件名
+  components: {
+      NavBread
+  }
 }
 </script>
 

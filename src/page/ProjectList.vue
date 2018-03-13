@@ -2,14 +2,11 @@
   <div class="hello">
 
 
-    <div class="nav-breadcrumb-wrap">
-        <div class="container">
-            <nav class="nav-breadcrumb">
-                <a href="/">Home</a>
-                <span>Goods</span>
-            </nav>
-        </div>
-    </div>
+      <!-- 使用导航组件 -->
+    <nav-bread>
+        热门商品
+    </nav-bread>
+
     <div class="accessory-result-page accessory-page">
         <div class="container">
             <div class="filter-nav">
@@ -43,25 +40,23 @@
                 <div class="accessory-list-wrap">
                     <div class="accessory-list col-4">
                         <ul>
-                            <li>
+                            <li v-for="good in goodsList">
                                 <div class="pic">
                                     <a href="#">
-                                      
                                       <!-- <img src="/static/img/1.jpg" alt=""> -->
-                                      <img src="/static/img/1.jpg" alt="">
-                                      
-                                      
-                                      </a>
+                                      <!-- <img src="/static/img/1.jpg" alt=""> -->
+                                        <img v-bind:src="'/static/img/' + good.productImage" alt="">
+                                    </a>
                                 </div>
                                 <div class="main">
-                                    <div class="name">XX</div>
-                                    <div class="price">999</div>
+                                    <div class="name">{{good.productName}}</div>
+                                    <div class="price">{{good.salePrice | money}}</div>
                                     <div class="btn-area">
                                         <a href="javascript:;" class="btn btn--m">加入购物车</a>
                                     </div>
                                 </div>
                             </li>
-                            <li>
+                            <!-- <li>
                                 <div class="pic">
                                     <a href="#"><img src="/static/img/2.jpg" alt=""></a>
                                 </div>
@@ -96,49 +91,51 @@
                                         <a href="javascript:;" class="btn btn--m">加入购物车</a>
                                     </div>
                                 </div>
-                            </li>
+                            </li> -->
                         </ul>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- <footer class="footer">
-  <div class="footer__wrap">
-    <div class="footer__secondary">
-      <div class="footer__inner">
-        <div class="footer__region">
-          <span>Region</span>
-          <select class="footer__region__select">
-            <option value="en-US">USA</option>
-            <option value="zh-CN">China</option>
-            <option value="in">India</option>
-          </select>
-        </div>
-        <div class="footer__secondary__nav">
-          <span>Copyright © 2017 Shudong All Rights Reserved.</span>
-          <a href="http://us.lemall.com/us/aboutUs.html">
-            About Us
-          </a>
-          <a href="http://us.lemall.com/us/termsofUse.html">
-            Terms &amp; Conditions
-          </a>
-          <a href="http://us.lemall.com/us/privacyPolicy.html">
-            Privacy Policy
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-</footer> -->
 
 
   </div>
 </template>
 
 <script>
+import NavBread from "@/components/NavBread"
 export default {
-  name: 'ProjectList'
+  name: 'ProjectList',   // 组件名
+//   data: function() {
+
+//   }
+  data() {     // ES6中代表定义1个简单的函数
+    return {
+        goodsList: []             // 商品数据
+    }
+  },
+  mounted() {     // 挂载后请求数据
+    // this.axios 刚引入请求数据的模块
+    //  请求模拟数据
+
+    // var self = this;
+
+    // this.axios.get("/static/mock/mock-goods.json")
+    //     .then(function(res) {
+    //         // console.log(res)
+    //         self.goodsList = res.data.data
+    //     })
+
+    this.axios.get("/static/mock/mock-goods.json")
+        .then( (res) => {
+            // ES6 中箭头函数，不会改变 this 的指向
+            this.goodsList = res.data.data
+        })
+  },
+  components: {
+      NavBread
+  }
 }
 </script>
 

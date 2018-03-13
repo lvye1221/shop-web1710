@@ -10,6 +10,22 @@ Vue.use(VueAxios, Axios)
 
 Vue.config.productionTip = false
 
+
+import Axios from 'axios'
+
+import VueAxios from 'vue-axios'
+
+// 作用： 将 axios 绑定到 vue 实例中
+//       就可以通过  this.axios.get 去请求数据
+Vue.use(VueAxios, Axios)
+
+
+// 定义钱的过滤器
+Vue.filter("money", function(data) {
+  return "￥" + data;
+})
+
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

@@ -2,12 +2,15 @@
 <template>
   <div id="app">
     
+    <!-- 头部组件 -->
     <nav-header></nav-header>
 
     <router-view/>           
     <!-- 路由，根据我们的路径，可以替换不同的内容 -->
 
+    <!-- 底部组件 -->
     <nav-footer></nav-footer>
+    <!-- <nav-footer /> -->
   </div>
 </template>
 
@@ -35,5 +38,6 @@ export default {
   /* text-align: center; */
   color: #2c3e50;
   /* margin-top: 60px; */
+  /* 注释： Ctrl+/ */
 }
 </style>

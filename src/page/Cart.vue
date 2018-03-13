@@ -1,7 +1,10 @@
 <template>
-  <div class="hello">
-    
-    <nav-bread>购物车</nav-bread>
+  <div>
+
+      <!-- 使用导航组件 -->
+    <nav-bread>
+        购物车
+    </nav-bread>
 
     <div class="container">
         <div class="cart">
@@ -30,7 +33,7 @@
                                     </a>
                                 </div>
                                 <div class="cart-item-pic">
-                                    <img src="/static/1.jpg">
+                                    <img src="/static/img/1.jpg">
                                 </div>
                                 <div class="cart-item-title">
                                     <div class="item-name">XX</div>
@@ -90,18 +93,15 @@
             </div>
         </div>
     </div>
-
-
   </div>
 </template>
 
 <script>
 
-
-import NavBread from '@/components/NavBread'
+import NavBread from "@/components/NavBread"
 
 export default {
-  name: 'Cart',
+  name: 'Cart',   // 组件名
   components: {
       NavBread
   }
@@ -110,29 +110,29 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-    .input-sub,
-    .input-add {
-        min-width: 40px;
-        height: 100%;
-        border: 0;
-        color: #605F5F;
-        text-align: center;
-        font-size: 16px;
-        overflow: hidden;
-        display: inline-block;
-        background: #f0f0f0;
-    }
-    
-    .item-quantity .select-self-area {
-        background: none;
-        border: 1px solid #f0f0f0;
-    }
-    
-    .item-quantity .select-self-area .select-ipt {
-        display: inline-block;
-        padding: 0 3px;
-        width: 30px;
-        min-width: 30px;
-        text-align: center;
-    }
+.input-sub,
+        .input-add {
+            min-width: 40px;
+            height: 100%;
+            border: 0;
+            color: #605F5F;
+            text-align: center;
+            font-size: 16px;
+            overflow: hidden;
+            display: inline-block;
+            background: #f0f0f0;
+        }
+        
+        .item-quantity .select-self-area {
+            background: none;
+            border: 1px solid #f0f0f0;
+        }
+        
+        .item-quantity .select-self-area .select-ipt {
+            display: inline-block;
+            padding: 0 3px;
+            width: 30px;
+            min-width: 30px;
+            text-align: center;
+        }
 </style>

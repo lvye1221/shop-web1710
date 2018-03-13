@@ -1,10 +1,11 @@
 <template>
-  <div>
-    
-    <div class="site-header" style="clear:both;">
+  <div >
+      
+
+      <div class="site-header" style="clear:both;">
         <div class="container">
             <div class="header-logo">
-                <a href="index.php" title="小米官网"><img src="/static/img/logo.png" /></a>
+                <a href="#/" title="小米官网"><img src="/static/img/logo.png" /></a>
             </div>
             <div class="header-nav">
                 <ul class="nav-list">
@@ -12,7 +13,9 @@
                         <a class="btn-category-list" href="catalog.php" style="display:none;">全部商品分类</a>
                     </li>
                     <li class="nav-item">
-                        <!-- <a class="link" href="category.php?id=76"><span>电子产品</span></a> -->
+                        <a class="link" href="category.php?id=76">
+                            <!-- <span>电子产品</span> -->
+                        </a>
                         <div class='item-children'>
                             <div class="container">
                                 <ul class="children-list clearfix">
@@ -36,23 +39,77 @@
                     <span class="mini-cart-num J_cartNum" id="hd_cartnum">(0)</span>
                 </a>
             </div>
-            <div class="topbar-info J_userInfo" id="ECS_MEMBERZONE">
-                <a class="link" href="user.php" rel="nofollow">登录</a>
+            <div class="topbar-info J_userInfo" id="ECS_MEMBERZONE" v-show="userName==''">
+                <a class="link" href="#" rel="nofollow" v-on:click="showModal">登录</a>
                 <span class="sep">|</span>
                 <a class="link" href="user.php?act=register" rel="nofollow">注册</a>
             </div>
+            
+            <div class="topbar-info J_userInfo" id="ECS_MEMBERZONE" v-show="userName!=''">
+                {{userName}}
+            </div>
+                
             <!-- </div> -->
         </div>
         <div id="J_navMenu" class="header-nav-menu" style="display: none;">
             <div class="container"></div>
         </div>
     </div>
+
+    
+    <!-- 给组件添加属性 md-show 
+        传递的mdShow 是1个字符串，
+        "false" 表达式的结果是真
+    <login-modal md-show="false"></login-modal>
+
+    v-bind 代表取表达式的  "true" ==> true
+
+     v-on:guanbi="closeModal"
+
+     当父组件收到 guanbi 事件时，执行 closeModal 方法
+    -->
+
+    <login-modal 
+        v-bind:md-show="showLogin"
+        v-on:guanbi="closeModal"
+        v-on:chenggong="loginOK"
+    ></login-modal>
+
   </div>
 </template>
 
 <script>
+
+import LoginModal from "@/components/LoginModal"
+
 export default {
-  name: 'NavHeader'
+  name: 'NavHeader',
+  components: {
+      LoginModal
+  },
+  data() {
+      return {
+          showLogin: false,
+          userName: ""      // 保存的用户名
+      }
+  },
+  methods: {
+      loginOK(userName) {
+        this.userName = userName   // 保存登陆的用户名
+        
+        console.log(this.userName)
+        
+        this.closeModal();         // 关闭对话框
+      },
+
+      showModal() {
+          this.showLogin = true
+      },
+      
+      closeModal() {     // 关闭登陆对话框
+          this.showLogin = false
+      }
+  }
 }
 </script>
 

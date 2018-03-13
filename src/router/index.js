@@ -16,9 +16,9 @@ export default new Router({
       component: ProjectList         // 使用哪个组件
     },
     {
-      path: '/cart',                    // 路径，根路径
-      name: 'Cart',               // 路由名字
-      component: Cart             // 使用哪个组件
+      path: '/cart',                  // 购物车
+      name: 'Cart',                   // 路由名字
+      component: Cart          // 使用哪个组件
     }
   ]
 })

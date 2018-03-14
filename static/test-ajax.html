@@ -25,7 +25,14 @@
         },
         type: "POST",
         success: function(str) {
-            console.log(str)
+            // console.log(str)
+
+            $.ajax({
+                url: "http://hope1995.me:3000/users/cartList",
+                success: function(str) {
+                    console.log("购物车：", str)
+                }
+            })
         }
     })
 </script>

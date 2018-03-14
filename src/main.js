@@ -22,6 +22,8 @@ Vue.filter("money", function(data) {
 })
 
 
+
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

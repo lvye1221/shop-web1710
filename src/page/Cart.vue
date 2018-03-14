@@ -100,11 +100,33 @@
 
 import NavBread from "@/components/NavBread"
 
+// 引入中间人
+import bus from "@/bus"
+
 export default {
   name: 'Cart',   // 组件名
   components: {
       NavBread
+  },
+  created() {
+    //   因为
+
+    var self = this;
+    // 监听登陆成功的事件
+    bus.$on("loginOK", function() {
+        
+        self.loadData();
+    })
+  },
+  methods: {
+      loadData() { // 加载数据
+        this.axios.get("http://hope1995.me:3000/users/cartList")
+            .then((res) => {
+                console.log(res)
+            })
+      }
   }
+
 }
 </script>
 

@@ -35,6 +35,9 @@
 </template>
 
 <script>
+
+import bus from "@/bus.js"
+ 
 export default {
   name: 'LoginModal',
   props: ["mdShow", "aaa"],   // 来自于父组件传递的数据
@@ -49,6 +52,7 @@ export default {
   methods: {
 
       login: function() {
+         
 
         // this.mdShow = false
           this.axios.post(
@@ -61,12 +65,18 @@ export default {
                 // console.log(res)
                 var result = res.data  // 取出ajax的数据
                 if (result.status == 0) { // 说明登陆成功
+                    
+                    
                     // alert("登陆成功！")
                     
                     // 向父组件发送登陆成功的事件
                     // 并且将用户名传递给父组件
 
                     this.$emit("chenggong", result.result.userName)
+
+                    // 利用中间人 bus，发送登陆成功的消息
+                    //    loginOK
+                    bus.$emit("loginOK")
 
                 } else {
                     this.hasError = true;  // 出错了

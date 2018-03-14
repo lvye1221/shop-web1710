@@ -52,7 +52,7 @@
                                     <div class="name">{{good.productName}}</div>
                                     <div class="price">{{good.salePrice | money}}</div>
                                     <div class="btn-area">
-                                        <a href="javascript:;" class="btn btn--m">加入购物车</a>
+                                        <a href="javascript:;" class="btn btn--m" v-on:click="addCart(good.productId)">加入购物车</a>
                                     </div>
                                 </div>
                             </li>
@@ -116,6 +116,8 @@ export default {
     }
   },
   mounted() {     // 挂载后请求数据
+    // alert("主页商品列表中：商品数量" + this.$store.state.num)
+
     // this.axios 刚引入请求数据的模块
     //  请求模拟数据
 
@@ -142,6 +144,25 @@ export default {
   },
   components: {
       NavBread
+  },
+  methods: {
+      addCart: function(productId) {
+
+        //   alert(productId)
+
+        this.axios.post("/api/goods/addCart", {
+            productId: productId
+        }).then( (res) => {
+            var data = res.data
+            if (data.status == "0") {                
+                // 让状态管理器中 购物车数量 增1
+                //    执行 add 状态
+                this.$store.commit("add")
+            }
+        })
+
+
+      }
   }
 }
 </script>

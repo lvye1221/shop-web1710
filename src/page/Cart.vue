@@ -6,8 +6,6 @@
         购物车
     </nav-bread>
 
-    <svg-code />
-
     <div class="container">
         <div class="cart">
             <div class="page-title-normal">
@@ -25,38 +23,46 @@
                         </ul>
                     </div>
                     <ul class="cart-item-list">
-                        <li v-for="cart in cartList">
+                        <li v-for="(item, index) in cartList">
                             <div class="cart-tab-1">
                                 <div class="cart-item-check">
-                                    <a href="javascipt:;" class="checkbox-btn item-check-btn" >
+                                    <a href="javascipt:;" class="checkbox-btn item-check-btn" 
+                                        v-bind:class="item.checked?'check':''" 
+                                        v-on:click="item.checked=!item.checked"
+                                        >
                                         <svg class="icon icon-ok">
                                             <use xlink:href="#icon-ok"></use>
                                         </svg>
                                     </a>
                                 </div>
                                 <div class="cart-item-pic">
-                                    <img src="/static/img/1.jpg">
+                                    <img v-bind:src="'/static/img/' + item.productImage">
                                 </div>
                                 <div class="cart-item-title">
-                                    <div class="item-name">XX</div>
+                                    <div class="item-name">{{item.productName}}</div>
                                 </div>
                             </div>
                             <div class="cart-tab-2">
-                                <div class="item-price">1000</div>
+                                <div class="item-price">{{item.salePrice | money}}</div>
                             </div>
                             <div class="cart-tab-3">
                                 <div class="item-quantity">
-                                    <div class="select-self select-self-open">
-                                        <div class="select-self-area">
-                                            <a class="input-sub">-</a>
-                                            <span class="select-ipt">10</span>
-                                            <a class="input-add">+</a>
-                                        </div>
-                                    </div>
+                                    
+    <!-- 计算数量的组件 -->
+    <num-counter 
+        v-bind:num="item.productNum"
+        v-bind:index="index"
+        v-on:jian="jian"
+        v-on:jia="jia"
+    />
+
                                 </div>
                             </div>
                             <div class="cart-tab-4">
-                                <div class="item-price-total">100</div>
+                                <div class="item-price-total">
+{{item.salePrice * item.productNum | money}}
+
+                                </div>
                             </div>
                             <div class="cart-tab-5">
                                 <div class="cart-item-opration">
@@ -85,7 +91,7 @@
                     </div>
                     <div class="cart-foot-r">
                         <div class="item-total">
-                            总计: <span class="total-price">500</span>
+                            总计: <span class="total-price">{{sum}}</span>
                         </div>
                         <div class="btn-wrap">
                             <a class="btn btn--red">结算</a>
@@ -101,53 +107,76 @@
 <script>
 
 import NavBread from "@/components/NavBread"
-import SvgCode from "@/components/SvgCode"
+import NumCounter from "@/components/NumCounter"
+
+
+// 引入中间人
+import bus from "@/bus"
 
 export default {
   name: 'Cart',   // 组件名
   components: {
       NavBread,
-      SvgCode
+      NumCounter
   },
-  data() {  
-    return {
-        cartList: []            
-    }
+  created() {
+
+    var self = this;
+
+    // 流程
+    //  1. 判断是否登录
+    //      登录
+    //           获取数据
+    //      未登录
+    //           弹出登录对话框
+    self.loadData();
+
+    // 监听登陆成功的事件
+    bus.$on("loginOK", function() {
+        
+        self.loadData();
+    })
   },
-  mounted() { 
-    this.axios.get("/api/users/cartList")
-        .then( (res) => {
-            this.cartList = res.data.result
-        })
+
+  data() {
+      return {
+          cartList: []
+      }
   },
+  computed: {
+      sum: function() {
+          var s = 0;
+          for (var i = 0; i < this.cartList.length; i++) {
+              s += (this.cartList[i].salePrice * this.cartList[i].productNum)
+          }
+          return s
+      }
+  },
+  methods: {
+      loadData() { // 加载数据
+        this.axios.get("/api/users/cartList")
+            .then((res) => {
+                // console.log(res)
+                this.cartList = res.data.result
+            })
+      },
+      jia(i) {
+        //  i 代表当前点击的下标
+        this.cartList[i].productNum++
+
+      },
+      jian(i) {
+          if (this.cartList[i].productNum <= 0) {
+              return ; // 不能再减了
+          }
+        this.cartList[i].productNum--
+      }
+  }
+
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.input-sub,
-        .input-add {
-            min-width: 40px;
-            height: 100%;
-            border: 0;
-            color: #605F5F;
-            text-align: center;
-            font-size: 16px;
-            overflow: hidden;
-            display: inline-block;
-            background: #f0f0f0;
-        }
-        
-        .item-quantity .select-self-area {
-            background: none;
-            border: 1px solid #f0f0f0;
-        }
-        
-        .item-quantity .select-self-area .select-ipt {
-            display: inline-block;
-            padding: 0 3px;
-            width: 30px;
-            min-width: 30px;
-            text-align: center;
-        }
+
 </style>

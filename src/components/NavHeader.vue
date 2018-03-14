@@ -36,7 +36,7 @@
             <div class="topbar-cart" id="ECS_CARTINFO">
                 <a class="cart-mini " href="#/cart">
                     <i class="iconfont">&#xe60c;</i> 购物车
-                    <span class="mini-cart-num J_cartNum" id="hd_cartnum">(0)</span>
+                    <span class="mini-cart-num J_cartNum" id="hd_cartnum">({{carnum}})</span>
                 </a>
             </div>
             <div class="topbar-info J_userInfo" id="ECS_MEMBERZONE" v-show="userName==''">
@@ -47,6 +47,8 @@
             
             <div class="topbar-info J_userInfo" id="ECS_MEMBERZONE" v-show="userName!=''">
                 {{userName}}
+
+                <a class="link" href="javascript:void(0)" rel="nofollow" v-on:click="logout">退出</a>
             </div>
                 
             <!-- </div> -->
@@ -88,6 +90,36 @@ export default {
   components: {
       LoginModal
   },
+  
+  computed: {
+      carnum: function() {  // 定义1个数据， carnum
+        //   返回状态管理器中保存的 购物车数
+          return this.$store.state.num;
+      }
+  },
+
+  mounted: function() {
+
+    //   alert( this.$store.state.num )
+
+
+      this.axios.get("/api/users/checkLogin")
+        .then( (res) => {
+            // console.log(res)
+            var data = res.data
+
+            if (data.status == "0") {
+                // 说明已经登陆
+                this.userName = data.result;
+
+            } else {
+                // 说明没有登陆
+                this.userName = "";
+            }
+        })
+
+  },
+
   data() {
       return {
           showLogin: false,
@@ -95,6 +127,19 @@ export default {
       }
   },
   methods: {
+      logout() {
+        //   alert("退出")
+
+        this.axios.post("/api/users/logout")
+            .then( (res) => {
+                var data = res.data
+                if (data.status == "0") {
+                    // 说明退出成功
+                    this.userName = ""
+                }
+            })
+      },
+
       loginOK(userName) {
         this.userName = userName   // 保存登陆的用户名
         

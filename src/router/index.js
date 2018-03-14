@@ -5,6 +5,7 @@ import Router from 'vue-router'
 import HelloWorld from '@/components/HelloWorld'
 import ProjectList from '@/page/ProjectList'
 import Cart from '@/page/Cart'
+import Address from '@/page/Address'
 
 Vue.use(Router)
 
@@ -19,6 +20,11 @@ export default new Router({
       path: '/cart',                  // 购物车
       name: 'Cart',                   // 路由名字
       component: Cart          // 使用哪个组件
+    },
+    {
+      path: '/address',                  // 购物车
+      name: 'Address',                   // 路由名字
+      component: Address          // 使用哪个组件
     }
   ]
 })

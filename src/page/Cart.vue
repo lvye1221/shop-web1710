@@ -23,12 +23,12 @@
                         </ul>
                     </div>
                     <ul class="cart-item-list">
-                        <li v-for="(item, index) in cartList">
+                        <li v-for="(item, index) in cartList" :key="index">
                             <div class="cart-tab-1">
                                 <div class="cart-item-check">
                                     <a href="javascipt:;" class="checkbox-btn item-check-btn" 
                                         v-bind:class="item.checked?'check':''" 
-                                        v-on:click="item.checked=!item.checked"
+                                        v-on:click="checkItem(index)"
                                         >
                                         <svg class="icon icon-ok">
                                             <use xlink:href="#icon-ok"></use>
@@ -61,12 +61,11 @@
                             <div class="cart-tab-4">
                                 <div class="item-price-total">
 {{item.salePrice * item.productNum | money}}
-
                                 </div>
                             </div>
                             <div class="cart-tab-5">
                                 <div class="cart-item-opration">
-                                    <a href="javascript:;" class="item-edit-btn">
+                                    <a href="javascript:;" class="item-edit-btn" @click="delItem(index)">
                                         <svg class="icon icon-del">
                                             <use xlink:href="#icon-del"></use>
                                         </svg>
@@ -81,11 +80,11 @@
                 <div class="cart-foot-inner">
                     <div class="cart-foot-l">
                         <div class="item-all-check">
-                            <a href="javascipt:;">
-                                <span class="checkbox-btn item-check-btn">
-                      <svg class="icon icon-ok"><use xlink:href="#icon-ok"/></svg>
-                  </span>
-                  <span>全选</span>
+                            <a href="javascipt:;" @click="checkAll" >
+                                <span class="checkbox-btn item-check-btn" :class="allChecked?'check':''">
+                                    <svg class="icon icon-ok"><use xlink:href="#icon-ok"/></svg>
+                                </span>
+                                 <span>全选</span>
                             </a>
                         </div>
                     </div>
@@ -94,13 +93,15 @@
                             总计: <span class="total-price">{{sum}}</span>
                         </div>
                         <div class="btn-wrap">
-                            <a class="btn btn--red">结算</a>
+                            <a class="btn btn--red" @click="jiesuan">结算</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <svg-code />
   </div>
 </template>
 
@@ -108,6 +109,7 @@
 
 import NavBread from "@/components/NavBread"
 import NumCounter from "@/components/NumCounter"
+import SvgCode from "@/components/SvgCode"
 
 
 // 引入中间人
@@ -117,7 +119,8 @@ export default {
   name: 'Cart',   // 组件名
   components: {
       NavBread,
-      NumCounter
+      NumCounter,
+      SvgCode
   },
   created() {
 
@@ -150,14 +153,65 @@ export default {
               s += (this.cartList[i].salePrice * this.cartList[i].productNum)
           }
           return s
+      },
+
+      allChecked: function() {
+          var flag = true;
+          
+          for (var i = 0; i < this.cartList.length; i++) {
+              if (!this.cartList[i].checked) {
+                  flag = false
+                  break;
+              }
+          }
+
+          console.log("flag", flag)
+          return flag
       }
   },
   methods: {
+      jiesuan() {
+          this.$router.push({
+            path: '/address'
+            })
+      },
+      checkAll() {
+          var status = !this.allChecked;
+          for (var i = 0; i < this.cartList.length; i++) {
+              this.cartList[i].checked = status
+          }
+      },
+      delItem(i) {
+          var productId = this.cartList[i].productId
+
+          this.axios.post("/api/users/cartDel", {
+              productId
+          }).then( (res) => {
+            if (res.data.status == "0") {
+                this.cartList.splice(i, 1)
+            }
+          })
+
+      },
+
+      checkItem(i) {
+          console.log("this.cartList[i].checked", this.cartList[i].checked)
+          if (this.cartList[i].checked == undefined) {
+              this.cartList[i].checked = false
+          }
+          console.log("2 this.cartList[i].checked", this.cartList[i].checked)
+
+          this.cartList[i].checked = !this.cartList[i].checked
+
+          console.log("3 this.cartList[i].checked", i, this.cartList[i].checked)
+      },
       loadData() { // 加载数据
         this.axios.get("/api/users/cartList")
             .then((res) => {
                 // console.log(res)
                 this.cartList = res.data.result
+
+                this.$store.commit("updateNum", this.cartList.length)
             })
       },
       jia(i) {

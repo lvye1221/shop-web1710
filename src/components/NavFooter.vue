@@ -3,33 +3,7 @@
     <div class="site-footer">
         <div class="container">
             <div class="footer-service">
-                <!-- <ul class="list-service clearfix">
-                    <li>
-                        <a rel="nofollow" href="javascript:void(0)">
-                            <i class="iconfont"></i>1小时快修服务
-                        </a>
-                    </li>
-                    <li>
-                        <a rel="nofollow" href="javascript:void(0)">
-                            <i class="iconfont"></i>7天无理由退货
-                        </a>
-                    </li>
-                    <li>
-                        <a rel="nofollow" href="javascript:void(0)">
-                            <i class="iconfont"></i>15天免费换货
-                        </a>
-                    </li>
-                    <li>
-                        <a rel="nofollow" href="javascript:void(0)">
-                            <i class="iconfont"></i>满150元包邮
-                        </a>
-                    </li>
-                    <li>
-                        <a rel="nofollow" href="javascript:void(0)">
-                            <i class="iconfont"></i>520余家售后网点
-                        </a>
-                    </li>
-                </ul> -->
+
             </div>
             <div class="footer-links clearfix">
                 <div class="blank"></div>

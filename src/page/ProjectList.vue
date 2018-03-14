@@ -127,10 +127,17 @@ export default {
     //         self.goodsList = res.data.data
     //     })
 
-    this.axios.get("/static/mock/mock-goods.json")
+    this.axios.get("/api/goods/list", {
+        params: {
+            page: 1,
+            pageSize: 8,
+            sort: 1,
+            priceLevel: "all"
+        }
+    })
         .then( (res) => {
             // ES6 中箭头函数，不会改变 this 的指向
-            this.goodsList = res.data.data
+            this.goodsList = res.data.result.list
         })
   },
   components: {

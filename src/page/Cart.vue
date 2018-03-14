@@ -6,6 +6,8 @@
         购物车
     </nav-bread>
 
+    <svg-code />
+
     <div class="container">
         <div class="cart">
             <div class="page-title-normal">
@@ -23,7 +25,7 @@
                         </ul>
                     </div>
                     <ul class="cart-item-list">
-                        <li>
+                        <li v-for="cart in cartList">
                             <div class="cart-tab-1">
                                 <div class="cart-item-check">
                                     <a href="javascipt:;" class="checkbox-btn item-check-btn" >
@@ -99,12 +101,25 @@
 <script>
 
 import NavBread from "@/components/NavBread"
+import SvgCode from "@/components/SvgCode"
 
 export default {
   name: 'Cart',   // 组件名
   components: {
-      NavBread
-  }
+      NavBread,
+      SvgCode
+  },
+  data() {  
+    return {
+        cartList: []            
+    }
+  },
+  mounted() { 
+    this.axios.get("/api/users/cartList")
+        .then( (res) => {
+            this.cartList = res.data.result
+        })
+  },
 }
 </script>
 

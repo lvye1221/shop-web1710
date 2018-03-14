@@ -12,6 +12,13 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       
+      '/api' : {
+        target: 'http://hope1995.me:3000',
+        changeOrigin: true,
+        pathRewrite: {
+            '^/api': '/'
+        }
+      },
     },
 
     // Various Dev Server settings

@@ -42,25 +42,23 @@ export default {
       return {
         // mdShow: true,
         hasError: false,   // 是否存在错误
-        userName: "",
-        userPwd: ""
+        userName: "admin",
+        userPwd: "123456"
       }
   },
   methods: {
 
       login: function() {
 
-          this.axios.get(
-              "/static/mock/mock-login.json", {
-                  params: {
-                      userName: this.userName,
-                      userPwd: this.userPwd
-                  }
+          this.axios.post(
+              "/api/users/login", {
+                  userName: this.userName,
+                  userPwd: this.userPwd
               })
             .then( (res) => {
                 // console.log(res)
                 var result = res.data  // 取出ajax的数据
-                if (result.code == 0) { // 说明登陆成功
+                if (result.status == 0) { // 说明登陆成功
                     // alert("登陆成功！")
                     
                     // 向父组件发送登陆成功的事件

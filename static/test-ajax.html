@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+</head>
+<body>
+    
+</body>
+</html>
+
+<script>
+    // localhost:8080    ===>ajax  ==> http://hope1995.me:3000
+
+
+    $.ajax({
+        url: "http://hope1995.me:3000/users/login",
+        data: {
+            userName: "admin",
+            userPwd: "123456"
+        },
+        type: "POST",
+        success: function(str) {
+            console.log(str)
+        }
+    })
+</script>

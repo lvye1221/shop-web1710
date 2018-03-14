@@ -78,6 +78,7 @@
   </div>
 </template>
 
+
 <script>
 
 import LoginModal from "@/components/LoginModal"

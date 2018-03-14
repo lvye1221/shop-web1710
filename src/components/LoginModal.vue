@@ -50,17 +50,17 @@ export default {
 
       login: function() {
 
-          this.axios.get(
-              "/static/mock/mock-login.json", {
-                  params: {
-                      userName: this.userName,
-                      userPwd: this.userPwd
-                  }
+        // this.mdShow = false
+          this.axios.post(
+              "http://hope1995.me:3000/users/login", {
+                  userName: this.userName,
+                  userPwd: this.userPwd
+
               })
             .then( (res) => {
                 // console.log(res)
                 var result = res.data  // 取出ajax的数据
-                if (result.code == 0) { // 说明登陆成功
+                if (result.status == 0) { // 说明登陆成功
                     // alert("登陆成功！")
                     
                     // 向父组件发送登陆成功的事件

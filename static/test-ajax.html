@@ -18,7 +18,8 @@
 
 
     $.ajax({
-        url: "http://hope1995.me:3000/users/login",
+        // url: "http://hope1995.me:3000/users/login",
+        url: "/api/users/login",
         data: {
             userName: "admin",
             userPwd: "123456"
@@ -28,7 +29,8 @@
             // console.log(str)
 
             $.ajax({
-                url: "http://hope1995.me:3000/users/cartList",
+                // url: "http://hope1995.me:3000/users/cartList",
+                url: "/api/users/cartList",
                 success: function(str) {
                     console.log("购物车：", str)
                 }

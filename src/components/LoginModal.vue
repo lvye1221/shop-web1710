@@ -56,7 +56,7 @@ export default {
 
         // this.mdShow = false
           this.axios.post(
-              "http://hope1995.me:3000/users/login", {
+              "/api/users/login", {
                   userName: this.userName,
                   userPwd: this.userPwd
 

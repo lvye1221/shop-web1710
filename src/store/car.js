@@ -14,6 +14,10 @@ var store = new Vuex.Store({
     mutations: {    // 状态函数，用于更改状态
       add (state) {     // 函数名，    state 当前store中的状态
         state.num ++
+      },
+
+      update (state, n) {  // 更新函数，update可以改
+        state.num = n
       }
     }
 })

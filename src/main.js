@@ -33,3 +33,8 @@ new Vue({
   components: { App },  // 局部组件，说明应用了 App 组件
   template: '<App/>'
 })
+
+
+window.onbeforeunload  = function() {
+  alert("onbeforeunload ")
+}
